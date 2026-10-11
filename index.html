@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clovis Cilumba | Photo, Livestream, Podcast</title>
+  <meta name="description" content="Photography, livestreaming and podcast recording in Ottawa. See my work and book a session.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       COLORS & FONTS — change these to restyle the whole site
+       ========================================================= */
+    :root {
+      --ink: #12152b;      /* page background (deep stage navy) */
+      --stage: #1b2041;    /* raised sections */
+      --line: #2f3561;     /* borders */
+      --text: #f1eef8;     /* main text */
+      --muted: #a9a6c6;    /* secondary text */
+      --amber: #ffb547;    /* spotlight accent */
+      --amber-ink: #241500;/* text on amber buttons */
+      --display: "Big Shoulders Display", Impact, sans-serif;
+      --body: "Instrument Sans", system-ui, sans-serif;
+      --wrap: 1120px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--text);
+      font: 400 1.0625rem/1.6 var(--body);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+
+    .wrap { width: min(var(--wrap), 100% - 32px); margin-inline: auto; }
+
+    h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: .95; margin: 0; letter-spacing: .005em; }
+    h2 { font-size: clamp(2.6rem, 6vw, 4.5rem); margin-bottom: .4em; }
+    .lede { color: var(--muted); max-width: 56ch; margin: 0 0 2.5rem; }
+
+    section { padding: clamp(4rem, 9vw, 7rem) 0; }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 48px; padding: 0 1.4rem; border-radius: 999px;
+      font: 600 1rem var(--body); text-decoration: none; cursor: pointer;
+      border: 2px solid var(--amber); transition: background .2s, color .2s;
+    }
+    .btn-solid { background: var(--amber); color: var(--amber-ink); }
+    .btn-solid:hover { background: #ffc66e; }
+    .btn-line { background: transparent; color: var(--text); border-color: rgba(241,238,248,.4); }
+    .btn-line:hover { border-color: var(--text); }
+
+    /* ---------- Header ---------- */
+    header.top {
+      position: fixed; inset: 0 0 auto; z-index: 20;
+      background: linear-gradient(to bottom, rgba(18,21,43,.9), rgba(18,21,43,0));
+    }
+    header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 1rem; }
+    .logo { font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-decoration: none; }
+    nav.links { display: flex; gap: 1.6rem; align-items: center; }
+    nav.links a { text-decoration: none; color: var(--muted); font-weight: 500; }
+    nav.links a:hover { color: var(--text); }
+    nav.links .btn { color: var(--amber-ink); min-height: 40px; }
+    @media (max-width: 720px) { nav.links a:not(.btn) { display: none; } }
+
+    /* ---------- Hero: stage lights ---------- */
+    .hero {
+      position: relative; overflow: hidden; min-height: min(92vh, 860px);
+      display: flex; align-items: flex-end; padding: 0 0 clamp(3rem, 8vw, 6rem);
+      background:
+        radial-gradient(ellipse 70% 30% at 50% 100%, rgba(255,181,71,.16), transparent 70%),
+        var(--ink);
+      /* To use your own photo instead, uncomment the next line and add the file to /images:
+         background: linear-gradient(to top, var(--ink) 5%, rgba(18,21,43,.35)), url("images/hero.jpg") center/cover; */
+    }
+    .beam {
+      position: absolute; top: -12%; height: 125%; width: 42vw; min-width: 260px;
+      transform-origin: 50% 0;
+      clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
+      filter: blur(10px); mix-blend-mode: screen; pointer-events: none;
+      transform: rotate(var(--r)); opacity: var(--o);
+      animation: sweep 1.8s cubic-bezier(.2,.7,.2,1) both;
+    }
+    .beam.a { left: -4%;  --r: 20deg;  --o: .55; background: linear-gradient(rgba(255,181,71,.9), transparent 78%); }
+    .beam.b { left: 30%;  --r: -6deg;  --o: .38; background: linear-gradient(rgba(120,140,255,.9), transparent 70%); animation-delay: .15s; }
+    .beam.c { right: -6%; --r: -24deg; --o: .5;  background: linear-gradient(rgba(255,181,71,.85), transparent 75%); animation-delay: .3s; }
+    @keyframes sweep { from { transform: rotate(0deg); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .beam { animation: none; } html { scroll-behavior: auto; } }
+
+    .hero .wrap { position: relative; }
+    .hero h1 { font-size: clamp(4.2rem, 15vw, 11.5rem); line-height: .82; max-width: 9ch; }
+    .hero p { font-size: clamp(1.1rem, 2vw, 1.35rem); color: var(--text); opacity: .85; max-width: 34ch; margin: 1.5rem 0 2rem; }
+    .actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+
+    /* ---------- Services ---------- */
+    .service {
+      display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem;
+      padding: 2.4rem 0; border-top: 1px solid var(--line);
+    }
+    .service:last-child { border-bottom: 1px solid var(--line); }
+    .service h3 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); }
+    .service p { margin: 0 0 1rem; color: var(--muted); max-width: 60ch; }
+    .service ul { margin: 0 0 1.4rem; padding-left: 1.1rem; }
+    .service li { margin-bottom: .3rem; }
+    .service .row { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; }
+    .price { font-weight: 600; color: var(--amber); }
+    @media (max-width: 760px) { .service { grid-template-columns: 1fr; gap: 1rem; } }
+
+    /* ---------- Portfolio ---------- */
+    #work { background: var(--stage); }
+    .filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+    .filters button {
+      font: 500 .95rem var(--body); color: var(--muted); background: transparent;
+      border: 1px solid var(--line); border-radius: 999px; padding: .5rem 1rem; cursor: pointer; min-height: 40px;
+    }
+    .filters button[aria-pressed="true"] { background: var(--text); color: var(--ink); border-color: var(--text); }
+    .grid { columns: 3 260px; column-gap: 12px; }
+    .tile {
+      break-inside: avoid; margin: 0 0 12px; display: block; width: 100%;
+      border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: 6px; overflow: hidden;
+    }
+    .tile img { width: 100%; height: auto; transition: transform .4s; }
+    .tile:hover img { transform: scale(1.03); }
+    .placeholder {
+      display: grid; place-items: center; color: var(--muted); font-size: .9rem; text-align: center; padding: 1rem;
+      background: repeating-linear-gradient(135deg, #232954 0 14px, #20254c 14px 28px);
+      border: 1px dashed var(--line); border-radius: 6px;
+    }
+    dialog#lightbox { border: 0; padding: 0; background: transparent; max-width: 92vw; max-height: 92vh; }
+    dialog#lightbox::backdrop { background: rgba(8,10,22,.92); }
+    dialog#lightbox img { max-height: 86vh; width: auto; margin: auto; border-radius: 4px; }
+    dialog#lightbox button {
+      position: fixed; top: 16px; right: 16px; width: 48px; height: 48px; border-radius: 50%;
+      border: 0; background: var(--text); color: var(--ink); font-size: 1.5rem; cursor: pointer;
+    }
+
+    /* ---------- Testimonials ---------- */
+    .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2.5rem 3rem; }
+    blockquote { margin: 0; padding-left: 1.2rem; border-left: 3px solid var(--amber); }
+    blockquote p { font-size: 1.2rem; line-height: 1.5; margin: 0 0 1rem; }
+    blockquote footer { color: var(--muted); font-size: .95rem; }
+    .is-placeholder p { color: var(--muted); font-style: italic; }
+
+    /* ---------- Booking ---------- */
+    #book { background: var(--stage); }
+    .book-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 3rem; }
+    @media (max-width: 860px) { .book-grid { grid-template-columns: 1fr; gap: 1rem; } }
+    .contact-alt { color: var(--muted); }
+    .contact-alt a { color: var(--text); }
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.2rem; }
+    .full { grid-column: 1 / -1; }
+    @media (max-width: 560px) { form { grid-template-columns: 1fr; } }
+    label { display: block; font-weight: 500; font-size: .95rem; margin-bottom: .35rem; }
+    input, select, textarea {
+      width: 100%; font: 400 1rem var(--body); color: var(--text);
+      background: var(--ink); border: 1px solid var(--line); border-radius: 8px;
+      padding: .8rem .9rem; min-height: 48px;
+    }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(255,181,71,.25); }
+    textarea { min-height: 130px; resize: vertical; }
+    input[type="date"] { color-scheme: dark; }
+    .status { grid-column: 1 / -1; margin: 0; min-height: 1.6em; }
+    .status.ok { color: #8fe3a8; }
+    .status.err { color: #ff9b8a; }
+
+    /* ---------- Footer ---------- */
+    footer.site { padding: 2.5rem 0; color: var(--muted); font-size: .95rem; }
+    footer.site .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+  </style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">Clovis Cilumba</a>
+    <nav class="links" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#work">Portfolio</a>
+      <a href="#reviews">Reviews</a>
+      <a class="btn btn-solid" href="#book">Book</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <span class="beam a" aria-hidden="true"></span>
+    <span class="beam b" aria-hidden="true"></span>
+    <span class="beam c" aria-hidden="true"></span>
+    <div class="wrap">
+      <h1>Clovis Cilumba</h1>
+      <p>Photography, livestreaming and podcast recording in Ottawa.</p>
+      <div class="actions">
+        <a class="btn btn-solid" href="#book">Book a session</a>
+        <a class="btn btn-line" href="#work">See my work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section id="services">
+    <div class="wrap">
+      <h2>Services</h2>
+      <p class="lede">Tell me about your event and I'll send you a quote.</p>
+
+      <article class="service">
+        <h3>Photo shoots</h3>
+        <div>
+          <p>Concerts, events and portraits, edited and delivered ready to post or print.</p>
+          <ul>
+            <li>Concerts and live shows</li>
+            <li>Events, celebrations and church services</li>
+            <li>Portraits and promo photos</li>
+          </ul>
+          <div class="row">
+            <span class="price">Quote on request</span>
+            <a class="btn btn-line" href="#book" data-service="Photo shoot">Book a photo shoot</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="service">
+        <h3>Livestreaming</h3>
+        <div>
+          <p>Your service, conference or event streamed live so people can watch from anywhere.</p>
+          <ul>
+            <li>Streams to YouTube, Facebook or your own platform</li>
+            <li>Church services, conferences and special events</li>
+            <li>Setup, testing and operation on the day</li>
+          </ul>
+          <div class="row">
+            <span class="price">Quote on request</span>
+            <a class="btn btn-line" href="#book" data-service="Livestreaming">Book livestreaming</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="service">
+        <h3>Podcast recording</h3>
+        <div>
+          <p>Recording for podcasts and interviews, with video so you can post clips too.</p>
+          <ul>
+            <li>Audio and video recording</li>
+            <li>Interviews and conversations</li>
+            <li>Files delivered ready for editing or upload</li>
+          </ul>
+          <div class="row">
+            <span class="price">Quote on request</span>
+            <a class="btn btn-line" href="#book" data-service="Podcast recording">Book a recording</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== PORTFOLIO ===================== -->
+  <section id="work">
+    <div class="wrap">
+      <h2>Portfolio</h2>
+      <p class="lede">A selection of concerts, events, portraits and livestreams.</p>
+      <div class="filters" role="group" aria-label="Filter portfolio">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="concerts" aria-pressed="false">Concerts</button>
+        <button type="button" data-filter="events" aria-pressed="false">Events</button>
+        <button type="button" data-filter="portraits" aria-pressed="false">Portraits</button>
+        <button type="button" data-filter="livestreams" aria-pressed="false">Livestreams</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <!-- Replace each placeholder with a real quote from a client (ask them first),
+       then remove class="is-placeholder" from that blockquote. -->
+  <section id="reviews">
+    <div class="wrap">
+      <h2>What clients say</h2>
+      <div class="quotes">
+        <blockquote class="is-placeholder">
+          <p>Add a real quote from a client here, in their own words.</p>
+          <footer>Client name, type of event</footer>
+        </blockquote>
+        <blockquote class="is-placeholder">
+          <p>Add a second client quote here.</p>
+          <footer>Client name, type of event</footer>
+        </blockquote>
+        <blockquote class="is-placeholder">
+          <p>Add a third client quote here.</p>
+          <footer>Client name, type of event</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BOOKING ===================== -->
+  <section id="book">
+    <div class="wrap book-grid">
+      <div>
+        <h2>Book a session</h2>
+        <p class="lede">Send your details and I'll reply within 48 hours to confirm the date and price.</p>
+        <p class="contact-alt">Prefer to message directly?<br>
+          Email <a href="mailto:you@example.com">you@example.com</a><br>
+          Instagram <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener">@yourhandle</a>
+        </p>
+      </div>
+
+      <!-- Paste your Formspree form link into action="..." (see README step 3) -->
+      <form id="booking" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div>
+          <label for="name">Your name</label>
+          <input id="name" name="name" autocomplete="name" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div>
+          <label for="phone">Phone (optional)</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div>
+          <label for="service">Service</label>
+          <select id="service" name="service" required>
+            <option value="">Choose a service</option>
+            <option>Photo shoot</option>
+            <option>Livestreaming</option>
+            <option>Podcast recording</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div>
+          <label for="date">Event date</label>
+          <input id="date" name="date" type="date" required>
+        </div>
+        <div>
+          <label for="location">Location</label>
+          <input id="location" name="location" placeholder="Venue or neighbourhood">
+        </div>
+        <div class="full">
+          <label for="message">Tell me about your event</label>
+          <textarea id="message" name="message" placeholder="Type of event, start time, how long, anything special"></textarea>
+        </div>
+        <div class="full">
+          <button class="btn btn-solid" type="submit">Send booking request</button>
+        </div>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>&copy; <span id="year"></span> Clovis Cilumba, Ottawa</span>
+    <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</footer>
+
+<dialog id="lightbox" aria-label="Photo viewer">
+  <button type="button" aria-label="Close">&times;</button>
+  <img alt="">
+</dialog>
+
+<script>
+  /* =========================================================
+     YOUR PORTFOLIO — add one line per photo.
+     1. Put the photo in the "images" folder.
+     2. Add a line:  { src: "images/name.jpg", category: "concerts", alt: "Short description" },
+     Categories: concerts, events, portraits, livestreams
+     Lines with src: "" show a grey placeholder box.
+     ========================================================= */
+  const PHOTOS = [
+    { src: "", category: "concerts",    alt: "Concert photo" },
+    { src: "", category: "concerts",    alt: "Concert photo" },
+    { src: "", category: "events",      alt: "Event photo" },
+    { src: "", category: "portraits",   alt: "Portrait" },
+    { src: "", category: "concerts",    alt: "Concert photo" },
+    { src: "", category: "livestreams", alt: "Livestream setup" },
+    { src: "", category: "events",      alt: "Event photo" },
+    { src: "", category: "portraits",   alt: "Portrait" },
+    { src: "", category: "livestreams", alt: "Livestream screenshot" },
+  ];
+
+  const grid = document.getElementById("grid");
+  const lightbox = document.getElementById("lightbox");
+  const heights = [240, 320, 280, 360, 260];
+
+  function render(filter) {
+    grid.innerHTML = "";
+    PHOTOS.filter(p => filter === "all" || p.category === filter).forEach((p, i) => {
+      if (!p.src) {
+        const box = document.createElement("div");
+        box.className = "placeholder tile";
+        box.style.height = heights[i % heights.length] + "px";
+        box.style.cursor = "default";
+        box.textContent = "Add a " + p.category.replace(/s$/, "") + " photo";
+        grid.appendChild(box);
+        return;
+      }
+      const btn = document.createElement("button");
+      btn.className = "tile";
+      btn.type = "button";
+      btn.setAttribute("aria-label", "Open " + p.alt);
+      const img = document.createElement("img");
+      img.src = p.src; img.alt = p.alt; img.loading = "lazy";
+      btn.appendChild(img);
+      btn.addEventListener("click", () => {
+        const big = lightbox.querySelector("img");
+        big.src = p.src; big.alt = p.alt;
+        lightbox.showModal();
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  document.querySelectorAll(".filters button").forEach(b => {
+    b.addEventListener("click", () => {
+      document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", "false"));
+      b.setAttribute("aria-pressed", "true");
+      render(b.dataset.filter);
+    });
+  });
+  lightbox.querySelector("button").addEventListener("click", () => lightbox.close());
+  lightbox.addEventListener("click", e => { if (e.target === lightbox) lightbox.close(); });
+  render("all");
+
+  /* "Book this" buttons pre-select the service in the form */
+  document.querySelectorAll("[data-service]").forEach(a => {
+    a.addEventListener("click", () => { document.getElementById("service").value = a.dataset.service; });
+  });
+
+  /* No past dates in the date picker */
+  const d = new Date();
+  document.getElementById("date").min =
+    new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  document.getElementById("year").textContent = d.getFullYear();
+
+  /* Booking form: sends to Formspree and shows a message on the page */
+  const form = document.getElementById("booking");
+  const status = document.getElementById("status");
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    status.className = "status";
+    if (form.action.includes("YOUR_FORM_ID")) {
+      status.textContent = "The booking form isn't connected yet. Add your Formspree link (README step 3).";
+      status.classList.add("err");
+      return;
+    }
+    const button = form.querySelector("button[type=submit]");
+    button.disabled = true;
+    status.textContent = "Sending your request…";
+    try {
+      const res = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+      if (!res.ok) throw new Error();
+      form.reset();
+      status.textContent = "Request sent. I'll reply by email within 48 hours.";
+      status.classList.add("ok");
+    } catch {
+      status.textContent = "Your request didn't send. Check your connection and try again, or email me directly.";
+      status.classList.add("err");
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
