@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Client gallery | Clovis Cilumba</title>
+  <title>Client gallery | Mufuki</title>
   <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -26,7 +28,9 @@
     :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
     .wrap { width: min(1040px, 100% - 32px); margin-inline: auto; }
     header { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 1rem; }
-    .logo { font: 800 1.6rem var(--display); text-decoration: none; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo .mark { height: 30px; width: auto; }
+    .logo .word { height: 13px; width: auto; }
     .head-right { display: flex; gap: .8rem; align-items: center; }
     .head-right a { color: var(--muted); text-decoration: none; font-weight: 500; }
     .head-right a:hover { color: var(--text); }
@@ -74,7 +78,7 @@
 <body>
   <div class="wrap">
     <header>
-      <a class="logo" href="index.html">Clovis Cilumba</a>
+      <a class="logo" href="index.html"><img class="mark" src="images/logo-mark.png" alt="" width="160" height="99"><img class="word" src="images/logo-word.png" alt="Mufuki" width="600" height="56"></a>
       <div class="head-right">
         <a href="index.html" data-i18n="back">Back to site</a>
         <button class="lang-btn" type="button" id="langBtn">FR</button>
@@ -115,7 +119,7 @@
       </section>
     </main>
 
-    <footer>&copy; <span id="year"></span> Clovis Cilumba, Ottawa</footer>
+    <footer>&copy; <span id="year"></span> Mufuki, Ottawa</footer>
   </div>
 
 <script>
@@ -133,7 +137,7 @@ const GALLERIES = [
 
 const I18N = {
   en: {
-    pageTitle: "Client gallery | Clovis Cilumba", back: "Back to site", langSwitch: "Voir en français",
+    pageTitle: "Client gallery | Mufuki", back: "Back to site", langSwitch: "Voir en français",
     title: "Client gallery", intro: "Enter the access code I sent you to view and download your photos and videos.",
     codeLabel: "Access code", open: "Open my gallery", checking: "Checking your code…",
     empty: "Enter your access code first.",
@@ -143,7 +147,7 @@ const I18N = {
     noCrypto: "Your browser can't open the gallery. Try an up-to-date Chrome, Safari, Edge or Firefox.",
   },
   fr: {
-    pageTitle: "Galerie client | Clovis Cilumba", back: "Retour au site", langSwitch: "View in English",
+    pageTitle: "Galerie client | Mufuki", back: "Retour au site", langSwitch: "View in English",
     title: "Galerie client", intro: "Entrez le code d'accès que je vous ai envoyé pour voir et télécharger vos photos et vidéos.",
     codeLabel: "Code d'accès", open: "Ouvrir ma galerie", checking: "Vérification du code…",
     empty: "Entrez d'abord votre code d'accès.",
@@ -224,7 +228,7 @@ function showGallery(g) {
   const emb = expired ? null : driveEmbed(g.link);
   pv.hidden = !emb;
   if (emb && pv.src !== emb) pv.src = emb;
-  document.title = g.title + " | Clovis Cilumba";
+  document.title = g.title + " | Mufuki";
 }
 document.getElementById("closeBtn").addEventListener("click", () => {
   opened = null;

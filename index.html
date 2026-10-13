@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clovis Cilumba | Photo, Livestream, Podcast</title>
+  <title>Mufuki | Photo, Livestream, Podcast</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
   <meta name="description" content="Photography, livestreaming and podcast recording in Ottawa. See my work and book a session.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,7 +70,10 @@
       background: linear-gradient(to bottom, rgba(10,12,18,.92), rgba(10,12,18,0));
     }
     header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 1rem; }
-    .logo { font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-decoration: none; white-space: nowrap; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .logo .mark { height: 30px; width: auto; }
+    .logo .word { height: 13px; width: auto; }
+    @media (max-width: 420px) { .logo .word { height: 11px; } }
     nav.links { display: flex; gap: 1.4rem; align-items: center; }
     nav.links a:not(.btn) { text-decoration: none; color: var(--muted); font-weight: 500; }
     nav.links a:not(.btn):hover { color: var(--text); }
@@ -110,7 +115,8 @@
       background: radial-gradient(closest-side, rgba(255,196,165,.6), rgba(219,82,39,.3) 60%, transparent);
     }
     .hero .wrap { position: relative; z-index: 2; }
-    .hero h1 { font-size: clamp(4.2rem, 15vw, 11.5rem); line-height: .82; max-width: 9ch; }
+    .hero h1 { margin: 0; }
+    .hero h1 img { width: clamp(240px, 40vw, 470px); height: auto; filter: drop-shadow(0 10px 30px rgba(0,0,0,.45)); }
     .hero p { font-size: clamp(1.1rem, 2vw, 1.35rem); opacity: .88; max-width: 36ch; margin: 1.5rem 0 2rem; }
     .actions { display: flex; flex-wrap: wrap; gap: .8rem; }
 
@@ -282,7 +288,7 @@
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#top">Clovis Cilumba</a>
+    <a class="logo" href="#top"><img class="mark" src="images/logo-mark.png" alt="" width="160" height="99"><img class="word" src="images/logo-word.png" alt="Mufuki" width="600" height="56"></a>
     <nav class="links" aria-label="Main">
       <a href="#services" data-i18n="nav.services">Services</a>
       <a href="#work" data-i18n="nav.work">Portfolio</a>
@@ -305,7 +311,7 @@
     <div class="track-beam" aria-hidden="true"><div class="track-beam-inner" id="trackBeam"></div></div>
     <div class="spot-pool" id="spotPool" aria-hidden="true"></div>
     <div class="wrap">
-      <h1>Clovis Cilumba</h1>
+      <h1><img src="images/logo.png" alt="Mufuki, visual creator" width="900" height="690"></h1>
       <p data-i18n="hero.sub">Photography, livestreaming and podcast recording in Ottawa.</p>
       <div class="actions">
         <a class="btn btn-solid" href="#book" data-i18n="hero.cta1">Book a session</a>
@@ -552,7 +558,7 @@
 
 <footer class="site">
   <div class="wrap">
-    <span>&copy; <span id="year"></span> Clovis Cilumba, Ottawa</span>
+    <span>&copy; <span id="year"></span> Mufuki, Ottawa</span>
     <nav aria-label="Footer">
       <a href="client.html" data-i18n="nav.clients">Client login</a>
       <a href="https://instagram.com/mufuki_" target="_blank" rel="noopener">Instagram</a>
@@ -646,7 +652,7 @@ const CONFIG = {
    ===================================================================== */
 const I18N = {
   en: {
-    "meta.title": "Clovis Cilumba | Photo, Livestream, Podcast",
+    "meta.title": "Mufuki | Photo, Livestream, Podcast",
     "meta.desc": "Photography, livestreaming and podcast recording in Ottawa. See my work and book a session.",
     "nav.services": "Services", "nav.work": "Portfolio", "nav.prices": "Prices", "nav.clients": "Client login", "nav.book": "Book",
     "lang.switch": "Voir le site en français",
@@ -688,7 +694,7 @@ const I18N = {
     "form.failed": "Your request didn't send. Check your connection and try again, or email bookings@mufuki.ca.",
   },
   fr: {
-    "meta.title": "Clovis Cilumba | Photo, diffusion en direct, balado",
+    "meta.title": "Mufuki | Photo, diffusion en direct, balado",
     "meta.desc": "Photographie, diffusion en direct et enregistrement de balados à Ottawa. Découvrez mon travail et réservez une séance.",
     "nav.services": "Services", "nav.work": "Portfolio", "nav.prices": "Tarifs", "nav.clients": "Espace client", "nav.book": "Réserver",
     "lang.switch": "View the site in English",
