@@ -88,7 +88,7 @@
     /* ---------- Hero: tracking stage light ---------- */
     .hero {
       position: relative; overflow: hidden; min-height: min(94vh, 880px);
-      display: flex; align-items: flex-end; padding: 0 0 clamp(3rem, 8vw, 6rem);
+      display: flex; align-items: flex-end; padding: 104px 0 clamp(3rem, 8vw, 6rem);
       background: radial-gradient(ellipse 70% 55% at 55% 25%, rgba(3,78,140,.75), transparent 70%), linear-gradient(to bottom, #023661 0%, #011f3a 60%, var(--ink) 100%);
       touch-action: pan-y;
     }
@@ -116,7 +116,7 @@
     }
     .hero .wrap { position: relative; z-index: 2; }
     .hero h1 { margin: 0; }
-    .hero h1 img { width: clamp(240px, 40vw, 470px); height: auto; filter: drop-shadow(0 10px 30px rgba(0,0,0,.45)); }
+    .hero h1 img { width: clamp(220px, min(40vw, 52vh), 470px); height: auto; filter: drop-shadow(0 10px 30px rgba(0,0,0,.45)); }
     .hero p { font-size: clamp(1.1rem, 2vw, 1.35rem); opacity: .88; max-width: 36ch; margin: 1.5rem 0 2rem; }
     .actions { display: flex; flex-wrap: wrap; gap: .8rem; }
 
