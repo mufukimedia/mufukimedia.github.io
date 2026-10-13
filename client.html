@@ -10,8 +10,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #12152b; --stage: #1b2041; --line: #2f3561; --text: #f1eef8; --muted: #a9a6c6;
-      --amber: #ffb547; --amber-ink: #241500;
+      --ink: #0A0C12; --stage: #023661; --line: rgba(118,130,142,.35); --text: #F2F4F7; --muted: #A7B1BC;
+      --amber: #DB5227; --amber-ink: #0A0C12;
       --display: "Big Shoulders Display", Impact, sans-serif;
       --body: "Instrument Sans", system-ui, sans-serif;
     }
@@ -19,7 +19,7 @@
     [hidden] { display: none !important; }
     body {
       margin: 0; min-height: 100vh; color: var(--text); font: 400 1.0625rem/1.6 var(--body);
-      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,181,71,.14), transparent 70%), var(--ink);
+      background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(2,54,97,.95), transparent 75%), var(--ink);
       -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; }
@@ -32,7 +32,7 @@
     .head-right a:hover { color: var(--text); }
     .lang-btn {
       font: 600 .9rem var(--body); color: var(--text); background: transparent; cursor: pointer;
-      border: 1px solid rgba(241,238,248,.35); border-radius: 999px; min-height: 40px; min-width: 48px; padding: 0 .8rem;
+      border: 1px solid rgba(242,244,247,.35); border-radius: 999px; min-height: 40px; min-width: 48px; padding: 0 .8rem;
     }
     h1, h2 { font-family: var(--display); font-weight: 800; line-height: .95; margin: 0; }
     h1 { font-size: clamp(3rem, 9vw, 5.5rem); margin-bottom: .3em; }
@@ -48,16 +48,16 @@
       color: var(--text); background: var(--stage); border: 1px solid var(--line); border-radius: 10px;
       padding: 1rem; min-height: 60px;
     }
-    input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(255,181,71,.25); }
+    input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(219,82,39,.25); }
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
       min-height: 52px; padding: 0 1.6rem; border-radius: 999px; font: 600 1rem var(--body);
       text-decoration: none; cursor: pointer; border: 2px solid var(--amber);
     }
     .btn-solid { background: var(--amber); color: var(--amber-ink); }
-    .btn-solid:hover { background: #ffc66e; }
+    .btn-solid:hover { background: #E8643A; }
     .btn-solid:disabled { opacity: .6; cursor: progress; }
-    .btn-line { background: transparent; color: var(--text); border-color: rgba(241,238,248,.4); }
+    .btn-line { background: transparent; color: var(--text); border-color: rgba(242,244,247,.4); }
     .row { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; margin-top: 1.2rem; }
     .msg { min-height: 1.6em; margin: 1rem 0 0; }
     .msg.err { color: #ff9b8a; }
@@ -66,7 +66,7 @@
     .gallery-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; margin-bottom: 2rem; }
     .meta { display: flex; flex-wrap: wrap; gap: .4rem 1.5rem; margin: .6rem 0 0; color: var(--muted); }
     .note { background: var(--stage); border-left: 3px solid var(--amber); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 0 0 2rem; white-space: pre-line; }
-    .preview { width: 100%; height: min(70vh, 640px); border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .preview { width: 100%; height: min(70vh, 640px); border: 1px solid var(--line); border-radius: 12px; background: #F2F4F7; }
     .expired { color: #ff9b8a; }
     footer { padding: 2rem 0; color: var(--muted); font-size: .95rem; border-top: 1px solid var(--line); }
   </style>
