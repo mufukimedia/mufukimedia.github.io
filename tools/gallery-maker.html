@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gallery maker | Clovis Cilumba</title>
+  <title>Gallery maker | Mufuki</title>
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -169,7 +170,7 @@ ${url}
 Or go to mufuki.ca/client.html and enter this access code: ${code}
 ${data.expires ? `\nThe files are available until ${data.expires}, so please download them before then.\n` : ""}
 Thank you,
-Clovis
+Mufuki
 
 — — —
 
@@ -181,7 +182,7 @@ ${url}
 Ou allez sur mufuki.ca/client.html et entrez ce code d'accès : ${code}
 ${data.expires ? `\nLes fichiers sont disponibles jusqu'au ${data.expires}. Pensez à les télécharger d'ici là.\n` : ""}
 Merci,
-Clovis`;
+Mufuki`;
   $("verified").textContent = back.link === data.link ? "Checked: this code opens the gallery." : "";
   $("result").hidden = false;
   $("result").scrollIntoView({ behavior: "smooth" });
