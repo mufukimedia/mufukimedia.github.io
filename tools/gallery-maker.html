@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery maker | Clovis Cilumba</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#12152b; --stage:#1b2041; --line:#2f3561; --text:#f1eef8; --muted:#a9a6c6; --amber:#ffb547; --amber-ink:#241500; }
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin: 0; background: var(--ink); color: var(--text); font: 400 1rem/1.6 "Instrument Sans", system-ui, sans-serif; }
+    .wrap { width: min(760px, 100% - 32px); margin: 0 auto; padding: 3rem 0 5rem; }
+    h1 { font: 800 clamp(2.6rem, 7vw, 4rem)/.95 "Big Shoulders Display", Impact, sans-serif; margin: 0 0 .5rem; }
+    h2 { font-size: 1.15rem; margin: 2.5rem 0 .8rem; }
+    p { color: var(--muted); margin: 0 0 1rem; }
+    a { color: var(--text); }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+    form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.2rem; margin-top: 2rem; }
+    .full { grid-column: 1 / -1; }
+    @media (max-width: 600px) { form { grid-template-columns: 1fr; } }
+    label { display: block; font-weight: 500; margin-bottom: .35rem; }
+    .hint { font-size: .85rem; color: var(--muted); margin: .3rem 0 0; }
+    input, textarea {
+      width: 100%; font: 400 1rem "Instrument Sans", system-ui, sans-serif; color: var(--text); background: var(--stage);
+      border: 1px solid var(--line); border-radius: 8px; padding: .75rem .9rem; min-height: 48px;
+    }
+    input[type="date"] { color-scheme: dark; }
+    input:focus, textarea:focus { outline: none; border-color: var(--amber); }
+    textarea { min-height: 90px; resize: vertical; }
+    .code-row { display: flex; gap: .6rem; }
+    .code-row input { font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 1.3rem;
+      border-radius: 999px; font: 600 1rem "Instrument Sans", system-ui, sans-serif; cursor: pointer;
+      border: 2px solid var(--amber); background: var(--amber); color: var(--amber-ink); white-space: nowrap;
+    }
+    .btn.line { background: transparent; color: var(--text); border-color: rgba(241,238,248,.4); }
+    pre {
+      margin: 0; padding: 1rem; background: #0b0d1c; border: 1px solid var(--line); border-radius: 8px;
+      white-space: pre-wrap; word-break: break-all; font: .85rem/1.5 ui-monospace, Menlo, Consolas, monospace; color: var(--text);
+    }
+    .out-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: .6rem; }
+    .out-row h2 { margin: 0; }
+    .ok { color: #8fe3a8; font-weight: 600; }
+    .err { color: #ff9b8a; }
+    ol { color: var(--muted); padding-left: 1.2rem; }
+    ol li { margin-bottom: .4rem; }
+    ol strong { color: var(--text); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Gallery maker</h1>
+  <p>Creates a locked client gallery for <a href="../client.html">mufuki.ca/client.html</a>. Everything happens in this browser; nothing is sent anywhere.</p>
+
+  <form id="f">
+    <div>
+      <label for="client">Client first name</label>
+      <input id="client" required placeholder="Sarah">
+    </div>
+    <div>
+      <label for="title">Gallery title</label>
+      <input id="title" required placeholder="Sarah & Marc — Wedding">
+    </div>
+    <div>
+      <label for="date">Event date</label>
+      <input id="date" type="date" required>
+    </div>
+    <div>
+      <label for="expires">Available until</label>
+      <input id="expires" type="date">
+      <p class="hint">Leave empty to never expire.</p>
+    </div>
+    <div class="full">
+      <label for="link">Download link</label>
+      <input id="link" type="url" required placeholder="https://drive.google.com/drive/folders/...">
+      <p class="hint">Google Drive folder shared as "Anyone with the link" also shows a photo preview on the client's page. Dropbox, WeTransfer and other links work as a download button.</p>
+    </div>
+    <div class="full">
+      <label for="note">Message to the client (optional)</label>
+      <textarea id="note" placeholder="Thank you for having me! Photos are in full resolution. Tag @mufuki_ if you post them."></textarea>
+    </div>
+    <div class="full">
+      <label for="code">Access code</label>
+      <div class="code-row">
+        <input id="code" required autocomplete="off" spellcheck="false">
+        <button class="btn line" type="button" id="newCode">New code</button>
+      </div>
+      <p class="hint">Use the random code. Anyone with this code can open the gallery.</p>
+    </div>
+    <div class="full"><button class="btn" type="submit">Create gallery</button></div>
+    <p class="err full" id="err" role="alert"></p>
+  </form>
+
+  <div id="result" hidden>
+    <h2>Next steps</h2>
+    <ol>
+      <li>On GitHub, open <strong>client.html</strong> and click the pencil icon to edit it.</li>
+      <li>Find <strong>const GALLERIES = [</strong> and paste the line below on a new line inside the brackets.</li>
+      <li>Click <strong>Commit changes</strong>. The gallery works within a minute or two.</li>
+      <li>Send the client the message below.</li>
+    </ol>
+
+    <div class="out-row"><h2>1. Line to paste in client.html</h2><button class="btn line" type="button" data-copy="entry">Copy</button></div>
+    <pre id="entry"></pre>
+
+    <div class="out-row"><h2>2. Message for the client</h2><button class="btn line" type="button" data-copy="message">Copy</button></div>
+    <pre id="message"></pre>
+    <p class="ok" id="verified"></p>
+  </div>
+</div>
+
+<script>
+const enc = new TextEncoder(), dec = new TextDecoder();
+const b64 = u => btoa(String.fromCharCode(...new Uint8Array(u)));
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const norm = c => (c || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+const ALPHA = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+function newCode() {
+  const out = [];
+  while (out.length < 12) {
+    const r = crypto.getRandomValues(new Uint8Array(16));
+    for (const x of r) if (x < ALPHA.length * 8 && out.length < 12) out.push(ALPHA[x % ALPHA.length]);
+  }
+  return out.join("").match(/.{4}/g).join("-");
+}
+async function keyFrom(code, salt, usage) {
+  const base = await crypto.subtle.importKey("raw", enc.encode(norm(code)), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: 150000, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, [usage]);
+}
+
+const $ = id => document.getElementById(id);
+$("code").value = newCode();
+$("newCode").addEventListener("click", () => { $("code").value = newCode(); });
+
+$("f").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("err").textContent = "";
+  if (!window.crypto || !crypto.subtle) { $("err").textContent = "Open this page from https://mufuki.ca/tools/gallery-maker.html (it needs a secure connection)."; return; }
+  const code = $("code").value.trim().toUpperCase();
+  if (norm(code).length < 8) { $("err").textContent = "The access code needs at least 8 letters or numbers."; return; }
+  const data = {
+    client: $("client").value.trim(), title: $("title").value.trim(), date: $("date").value,
+    expires: $("expires").value, link: $("link").value.trim(), note: $("note").value.trim(),
+  };
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await keyFrom(code, salt, "encrypt");
+  const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(JSON.stringify(data)));
+  const entry = { s: b64(salt), i: b64(iv), d: b64(ct) };
+
+  // Check it opens with the same code before showing it.
+  const k2 = await keyFrom(code, unb64(entry.s), "decrypt");
+  const back = JSON.parse(dec.decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(entry.i) }, k2, unb64(entry.d))));
+
+  const label = data.title.replace(/\*\//g, "");
+  $("entry").textContent = `  /* ${label} */\n  ${JSON.stringify(entry)},`;
+  const url = `https://mufuki.ca/client.html#code=${code}`;
+  $("message").textContent =
+`Hi ${data.client},
+
+Your photos are ready! Open your private gallery here:
+${url}
+
+Or go to mufuki.ca/client.html and enter this access code: ${code}
+${data.expires ? `\nThe files are available until ${data.expires}, so please download them before then.\n` : ""}
+Thank you,
+Clovis
+
+— — —
+
+Bonjour ${data.client},
+
+Vos photos sont prêtes! Ouvrez votre galerie privée ici :
+${url}
+
+Ou allez sur mufuki.ca/client.html et entrez ce code d'accès : ${code}
+${data.expires ? `\nLes fichiers sont disponibles jusqu'au ${data.expires}. Pensez à les télécharger d'ici là.\n` : ""}
+Merci,
+Clovis`;
+  $("verified").textContent = back.link === data.link ? "Checked: this code opens the gallery." : "";
+  $("result").hidden = false;
+  $("result").scrollIntoView({ behavior: "smooth" });
+});
+
+document.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText($(b.dataset.copy).textContent); b.textContent = "Copied"; setTimeout(() => (b.textContent = "Copy"), 1500); }
+  catch { const r = document.createRange(); r.selectNodeContents($(b.dataset.copy)); getSelection().removeAllRanges(); getSelection().addRange(r); }
+}));
+</script>
+</body>
+</html>
