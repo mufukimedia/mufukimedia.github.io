@@ -1,74 +1,115 @@
-# Clovis Cilumba website — setup guide
+# mufuki.ca — how to update your website
 
-Everything is in one file: `index.html`. Photos go in an `images` folder next to it.
-Hosting on GitHub Pages is free. The only thing you pay for is your domain (once a year).
+Your site has three pages:
+
+| File | What it is |
+|---|---|
+| `index.html` | The main website |
+| `client.html` | The private client gallery (mufuki.ca/client.html) |
+| `tools/gallery-maker.html` | Your tool for creating client galleries (mufuki.ca/tools/gallery-maker.html) |
+
+Almost everything you'll change lives in **one block** near the bottom of `index.html` called `const CONFIG = {`. To edit on GitHub: open the file, click the **pencil icon**, make the change, then click **Commit changes**. The live site updates within a minute or two.
 
 ---
 
-## 1. Fill in your details (in index.html)
+## 1. Your prices
 
-Open `index.html` in any text editor (Notepad works; VS Code is nicer and free) and search for:
+Prices are hidden until you turn them on: in `CONFIG`, change `showPrices: false` to `showPrices: true`.
 
-| Search for | Replace with |
-|---|---|
-| `you@example.com` | your business email |
-| `yourhandle` | your Instagram username (appears 3 times) |
-| `Quote on request` | your prices, if you want to show them |
-| `within 48 hours` | how fast you actually reply (appears 2 times) |
-| Service descriptions | edit the text and bullet lists so they match exactly what you offer |
+In `CONFIG`, find `prices:`. Each service has:
+- `hourly`: your price per hour
+- `minHours` / `maxHours`: the range on the hours slider
+- `extras`: optional add-ons, each with an English name (`en`), a French name (`fr`) and a `price`
 
-## 2. Add your photos
+The "From $…/h" labels under each service and the price estimator both use these numbers.
 
-1. Create a folder called `images` next to `index.html`.
-2. Export your photos for web: about **2000px on the long side, JPG, under 500 KB each**. Big files make the site slow.
-3. Near the bottom of `index.html`, find `const PHOTOS = [` and fill in each line:
+## 2. Portfolio photos
 
-```js
-{ src: "images/concert-01.jpg", category: "concerts", alt: "Singer on stage at a concert in Ottawa" },
-```
+1. Export photos at about **2000px on the long side, JPG, under 500 KB**.
+2. On GitHub, open the `images` folder, then **Add file → Upload files**.
+3. In `CONFIG → photos`, fill in each line:
+   `{ src: "images/concert-01.jpg", category: "concerts", alt: "Singer on stage at a concert in Ottawa" },`
 
-Categories: `concerts`, `events`, `portraits`, `livestreams`. Add as many lines as you want.
+Categories: `concerts`, `events`, `portraits`, `livestreams`.
 
-**Hero photo (optional):** put a photo at `images/hero.jpg`, then in the `.hero` CSS block remove the `/*` and `*/` around the `background:` line marked "To use your own photo".
+## 3. Before and after
 
-## 3. Connect the booking form (free)
+Pick a photo you edited heavily. Export **both versions at exactly the same size**, upload them to `images`, then in `CONFIG → beforeAfter`:
 
-A website hosted on GitHub can't send emails by itself, so the form uses **Formspree**:
+`{ before: "images/show-raw.jpg", after: "images/show-edit.jpg", alt: "Concert photo before and after editing" },`
 
-1. Make a free account at formspree.io and create a new form.
-2. Copy the form link it gives you (looks like `https://formspree.io/f/abcdwxyz`).
-3. In `index.html`, replace `https://formspree.io/f/YOUR_FORM_ID` with your link.
+Add more lines for more comparisons.
 
-Booking requests will arrive in your email. The free plan has a monthly limit on submissions, which is plenty to start.
+## 4. Video behind your name
 
-## 4. Testimonials
+Make a **10–20 second loop, no sound, MP4, under ~10 MB** (1920px wide is plenty). Upload it to a `videos` folder and set:
 
-In the "What clients say" section, replace each placeholder with a real quote from a client (ask their permission), then delete `class="is-placeholder"` from that `<blockquote>`. Remove any extra placeholders you don't have quotes for yet.
+`heroVideo: "videos/reel.mp4",`
 
-## 5. Put it online with GitHub Pages
+The stage spotlight still follows the mouse on top of it.
 
-1. Create a free account at github.com.
-2. Click **New repository**. Name it (e.g. `website`), set it to **Public**, and create it.
-3. Click **Add file → Upload files**, drag in `index.html` and the `images` folder, then click **Commit changes**.
-4. Go to **Settings → Pages**. Under "Build and deployment", choose **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
-5. After a minute or two, your site is live at `https://YOUR-USERNAME.github.io/website/`.
+## 5. Video and podcast samples
 
-To update the site later: open the file on GitHub, click the pencil icon to edit, or upload a new version.
+Upload your clips to YouTube (Public or Unlisted), then paste the links in `CONFIG → reels`:
 
-## 6. Use your own domain
+`{ youtube: "https://youtu.be/abc123XYZ00", en: "Sunday service livestream", fr: "Diffusion du culte du dimanche" },`
 
-1. Buy a domain from a registrar (Namecheap, Porkbun, Cloudflare, GoDaddy, etc.).
-2. On GitHub: **Settings → Pages → Custom domain**, type your domain (e.g. `clovismedia.ca`) and save.
-3. At your registrar, open the DNS settings and add:
+## 6. Instagram posts
 
-| Type | Host / Name | Value |
-|---|---|---|
-| A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
-| CNAME | www | YOUR-USERNAME.github.io |
+Open a post on Instagram, tap **⋯ → Copy link**, and paste it in `CONFIG → instagramPosts`:
 
-4. Wait (can take up to a day), then tick **Enforce HTTPS** in Settings → Pages.
+`instagramPosts: ["https://www.instagram.com/p/ABC123/", "https://www.instagram.com/p/DEF456/"],`
 
-GitHub's official guide, if you get stuck: docs.github.com → search "GitHub Pages custom domain".
+3 or 6 posts look best. Update the list when you post something you're proud of.
+
+## 7. Online booking calendar (Cal.com, free)
+
+1. Sign up at **cal.com** with bookings@mufuki.ca and connect your Google Calendar.
+2. Create an event type (for example "Session call", 30 min) and set your available hours.
+3. Your link looks like `cal.com/mufuki/session`. Put the part after `cal.com/` in:
+   `calLink: "mufuki/session",`
+
+Clients then pick a time right on your site, and it lands in your calendar automatically.
+
+## 8. Booking form (Formspree, free)
+
+1. Sign up at **formspree.io** with bookings@mufuki.ca and create a form.
+2. Copy its link (like `https://formspree.io/f/abcdwxyz`).
+3. In `index.html`, replace `https://formspree.io/f/YOUR_FORM_ID` with it.
+
+## 9. Testimonials
+
+In the "What clients say" section of `index.html`, replace each placeholder with a real quote (with the client's permission) and remove `class="is-placeholder"` from that `<blockquote>`. Also remove the `data-i18n="rev.ph"` and `data-i18n="rev.who"` parts from that quote, otherwise the language switch replaces it with placeholder text.
+
+## 10. English / French
+
+All the site's text is in `I18N` (just below `CONFIG`), with an `en` and `fr` version of every line. Change both when you edit wording.
+
+---
+
+## Delivering photos and videos to a client
+
+**After each shoot:**
+
+1. **Upload the files to Google Drive** (15 GB free with your Gmail). Make one folder per client.
+2. Right-click the folder → **Share** → under General access choose **Anyone with the link** → **Copy link**.
+3. Open **mufuki.ca/tools/gallery-maker.html**. Fill in the client's name, gallery title, date, the Drive link and how long the files stay available. Click **Create gallery**.
+4. On GitHub, edit `client.html`. Find `const GALLERIES = [` and paste the line the tool gave you on a new line inside the brackets. **Commit changes**.
+5. Copy the client message from the tool and send it by email or text. It has a one-tap link and their access code, in English and French.
+
+The client opens the link and sees their name, the event, a preview of the photos, and a **Download all files** button.
+
+**Good to know**
+- The Drive link is locked inside `client.html`; nobody can read it without the client's code.
+- Anyone who has the code (or the Drive link itself) can open the files, so only send them to your client.
+- To remove access, delete that client's line from `client.html`, and in Google Drive change the folder back to **Restricted**.
+- When the expiry date passes, the gallery shows a message telling the client to email you.
+- Delete the **DEMO** line in `client.html` once you have real clients (demo code: `DEMO-MUFU-2026`).
+
+---
+
+## Domain and email (already set up)
+
+- mufuki.ca and www.mufuki.ca point to GitHub Pages (DNS at Porkbun).
+- bookings@mufuki.ca forwards to your Gmail (Porkbun → Email Forwarding).
+- If HTTPS isn't on yet: GitHub repo → Settings → Pages → tick **Enforce HTTPS**.

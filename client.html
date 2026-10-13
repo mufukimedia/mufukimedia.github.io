@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client gallery | Clovis Cilumba</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #12152b; --stage: #1b2041; --line: #2f3561; --text: #f1eef8; --muted: #a9a6c6;
+      --amber: #ffb547; --amber-ink: #241500;
+      --display: "Big Shoulders Display", Impact, sans-serif;
+      --body: "Instrument Sans", system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--text); font: 400 1.0625rem/1.6 var(--body);
+      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,181,71,.14), transparent 70%), var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+    .wrap { width: min(1040px, 100% - 32px); margin-inline: auto; }
+    header { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 1rem; }
+    .logo { font: 800 1.6rem var(--display); text-decoration: none; }
+    .head-right { display: flex; gap: .8rem; align-items: center; }
+    .head-right a { color: var(--muted); text-decoration: none; font-weight: 500; }
+    .head-right a:hover { color: var(--text); }
+    .lang-btn {
+      font: 600 .9rem var(--body); color: var(--text); background: transparent; cursor: pointer;
+      border: 1px solid rgba(241,238,248,.35); border-radius: 999px; min-height: 40px; min-width: 48px; padding: 0 .8rem;
+    }
+    h1, h2 { font-family: var(--display); font-weight: 800; line-height: .95; margin: 0; }
+    h1 { font-size: clamp(3rem, 9vw, 5.5rem); margin-bottom: .3em; }
+    h2 { font-size: clamp(2rem, 5vw, 3rem); }
+    .muted { color: var(--muted); }
+    main { padding: clamp(3rem, 10vw, 7rem) 0 5rem; }
+
+    .login { max-width: 520px; }
+    .login p { margin: 0 0 2rem; }
+    label { display: block; font-weight: 500; margin-bottom: .4rem; }
+    input {
+      width: 100%; font: 600 1.3rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase;
+      color: var(--text); background: var(--stage); border: 1px solid var(--line); border-radius: 10px;
+      padding: 1rem; min-height: 60px;
+    }
+    input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(255,181,71,.25); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      min-height: 52px; padding: 0 1.6rem; border-radius: 999px; font: 600 1rem var(--body);
+      text-decoration: none; cursor: pointer; border: 2px solid var(--amber);
+    }
+    .btn-solid { background: var(--amber); color: var(--amber-ink); }
+    .btn-solid:hover { background: #ffc66e; }
+    .btn-solid:disabled { opacity: .6; cursor: progress; }
+    .btn-line { background: transparent; color: var(--text); border-color: rgba(241,238,248,.4); }
+    .row { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; margin-top: 1.2rem; }
+    .msg { min-height: 1.6em; margin: 1rem 0 0; }
+    .msg.err { color: #ff9b8a; }
+    .help { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: .95rem; }
+
+    .gallery-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; margin-bottom: 2rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: .4rem 1.5rem; margin: .6rem 0 0; color: var(--muted); }
+    .note { background: var(--stage); border-left: 3px solid var(--amber); padding: 1rem 1.2rem; border-radius: 0 8px 8px 0; margin: 0 0 2rem; white-space: pre-line; }
+    .preview { width: 100%; height: min(70vh, 640px); border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .expired { color: #ff9b8a; }
+    footer { padding: 2rem 0; color: var(--muted); font-size: .95rem; border-top: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="index.html">Clovis Cilumba</a>
+      <div class="head-right">
+        <a href="index.html" data-i18n="back">Back to site</a>
+        <button class="lang-btn" type="button" id="langBtn">FR</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ========== LOGIN ========== -->
+      <section class="login" id="loginView">
+        <h1 data-i18n="title">Client gallery</h1>
+        <p class="muted" data-i18n="intro">Enter the access code I sent you to view and download your photos and videos.</p>
+        <form id="loginForm" novalidate>
+          <label for="code" data-i18n="codeLabel">Access code</label>
+          <input id="code" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX" required>
+          <div class="row">
+            <button class="btn btn-solid" type="submit" id="openBtn" data-i18n="open">Open my gallery</button>
+          </div>
+          <p class="msg" id="msg" role="status" aria-live="polite"></p>
+        </form>
+        <p class="help muted"><span data-i18n="help">Lost your code?</span> <a href="mailto:bookings@mufuki.ca">bookings@mufuki.ca</a></p>
+      </section>
+
+      <!-- ========== GALLERY ========== -->
+      <section id="galleryView" hidden>
+        <div class="gallery-head">
+          <div>
+            <p class="muted" id="hello"></p>
+            <h1 id="gTitle"></h1>
+            <p class="meta"><span id="gDate"></span><span id="gExpires"></span></p>
+          </div>
+          <div class="row">
+            <a class="btn btn-solid" id="gDownload" target="_blank" rel="noopener" data-i18n="download">Download all files</a>
+            <button class="btn btn-line" type="button" id="closeBtn" data-i18n="close">Close gallery</button>
+          </div>
+        </div>
+        <p class="note" id="gNote" hidden></p>
+        <iframe class="preview" id="gPreview" title="Gallery preview" hidden></iframe>
+      </section>
+    </main>
+
+    <footer>&copy; <span id="year"></span> Clovis Cilumba, Ottawa</footer>
+  </div>
+
+<script>
+/* =====================================================================
+   CLIENT GALLERIES
+   Each line below is one locked gallery. Create a new line with
+   tools/gallery-maker.html, then paste it inside the [ ] list.
+   The links are encrypted: nobody can read them without the client's code.
+   Delete a line to remove a client's access.
+   ===================================================================== */
+const GALLERIES = [
+  /* DEMO — code: DEMO-MUFU-2026. Delete this line once you have real clients. */
+  {"s":"Qsanj/feGpn6pOempmGGug==","i":"v9YOTbAv8k3YKZqf","d":"/j+Fe1Le2o4Qx+Qf/f35LgTFXld9yocIgEFwBlvrXRUAEn7rN/5tGnNnBBkgeGa3mvpe9JDoxtyqYW3SiLTsDOBgBNCcYHzzmkC4Wcxe+TPyT1O0MRAT4qTUroLCnpbDIBcySe29+goSZjvpOXcWFYsi3GtcZGVY8OdIrBcwDf+FDxqox8JqxhsyLT07Kzv3HM4vBSloK0FIlTQu2ou4hqwQlgRQdPwxYjEWAjSINi+AP9yooW/Ha5sBu5yv0IMup9cMrM+SKU+9JWsT6vvBrltAne4L6AQ1yWyYLgvvUcyhIZ2QzVfHC/OgXrXDvUPo6GyFxw=="},
+];
+
+const I18N = {
+  en: {
+    pageTitle: "Client gallery | Clovis Cilumba", back: "Back to site", langSwitch: "Voir en français",
+    title: "Client gallery", intro: "Enter the access code I sent you to view and download your photos and videos.",
+    codeLabel: "Access code", open: "Open my gallery", checking: "Checking your code…",
+    empty: "Enter your access code first.",
+    wrong: "That code doesn't match a gallery. Check the code in your email and try again.",
+    help: "Lost your code? Email", hello: "Hi {n},", download: "Download all files", close: "Close gallery",
+    available: "Available until {d}", expiredOn: "This gallery expired on {d}. Email bookings@mufuki.ca to get your files again.",
+    noCrypto: "Your browser can't open the gallery. Try an up-to-date Chrome, Safari, Edge or Firefox.",
+  },
+  fr: {
+    pageTitle: "Galerie client | Clovis Cilumba", back: "Retour au site", langSwitch: "View in English",
+    title: "Galerie client", intro: "Entrez le code d'accès que je vous ai envoyé pour voir et télécharger vos photos et vidéos.",
+    codeLabel: "Code d'accès", open: "Ouvrir ma galerie", checking: "Vérification du code…",
+    empty: "Entrez d'abord votre code d'accès.",
+    wrong: "Ce code ne correspond à aucune galerie. Vérifiez le code dans votre courriel et réessayez.",
+    help: "Code perdu? Écrivez à", hello: "Bonjour {n},", download: "Télécharger tous les fichiers", close: "Fermer la galerie",
+    available: "Disponible jusqu'au {d}", expiredOn: "Cette galerie a expiré le {d}. Écrivez à bookings@mufuki.ca pour récupérer vos fichiers.",
+    noCrypto: "Votre navigateur ne peut pas ouvrir la galerie. Essayez une version récente de Chrome, Safari, Edge ou Firefox.",
+  },
+};
+
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+};
+let lang = store.get("lang") || ((navigator.language || "").toLowerCase().startsWith("fr") ? "fr" : "en");
+if (!I18N[lang]) lang = "en";
+const t = (k, v = {}) => Object.entries(v).reduce((s, [a, b]) => s.replaceAll("{" + a + "}", b), I18N[lang][k] ?? I18N.en[k] ?? k);
+const fmtDate = iso => {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Intl.DateTimeFormat(lang === "fr" ? "fr-CA" : "en-CA", { dateStyle: "long" }).format(new Date(y, m - 1, d));
+};
+
+let opened = null;
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.title = t("pageTitle");
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  const b = document.getElementById("langBtn");
+  b.textContent = lang === "en" ? "FR" : "EN";
+  b.lang = lang === "en" ? "fr" : "en";
+  b.setAttribute("aria-label", t("langSwitch"));
+  if (opened) showGallery(opened);
+}
+document.getElementById("langBtn").addEventListener("click", () => { lang = lang === "en" ? "fr" : "en"; store.set("lang", lang); applyLang(); });
+
+/* ---------- Decryption (AES-GCM, key from the code with PBKDF2) ---------- */
+const enc = new TextEncoder(), dec = new TextDecoder();
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const norm = c => (c || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+async function keyFrom(code, salt) {
+  const base = await crypto.subtle.importKey("raw", enc.encode(norm(code)), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: 150000, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+}
+async function unlock(code) {
+  for (const g of GALLERIES) {
+    try {
+      const key = await keyFrom(code, unb64(g.s));
+      const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(g.i) }, key, unb64(g.d));
+      return JSON.parse(dec.decode(plain));
+    } catch { /* not this gallery */ }
+  }
+  return null;
+}
+
+/* ---------- Views ---------- */
+function driveEmbed(url) {
+  const m = (url || "").match(/drive\.google\.com\/drive\/(?:u\/\d+\/)?folders\/([\w-]+)/);
+  return m ? `https://drive.google.com/embeddedfolderview?id=${m[1]}#grid` : null;
+}
+function showGallery(g) {
+  opened = g;
+  document.getElementById("loginView").hidden = true;
+  document.getElementById("galleryView").hidden = false;
+  document.getElementById("hello").textContent = t("hello", { n: g.client });
+  document.getElementById("gTitle").textContent = g.title;
+  document.getElementById("gDate").textContent = fmtDate(g.date);
+  const today = new Date().toISOString().slice(0, 10);
+  const expired = g.expires && g.expires < today;
+  const ex = document.getElementById("gExpires");
+  ex.textContent = g.expires ? (expired ? t("expiredOn", { d: fmtDate(g.expires) }) : t("available", { d: fmtDate(g.expires) })) : "";
+  ex.className = expired ? "expired" : "";
+  const dl = document.getElementById("gDownload");
+  dl.hidden = expired; dl.href = expired ? "#" : g.link;
+  const note = document.getElementById("gNote");
+  note.hidden = !g.note; note.textContent = g.note || "";
+  const pv = document.getElementById("gPreview");
+  const emb = expired ? null : driveEmbed(g.link);
+  pv.hidden = !emb;
+  if (emb && pv.src !== emb) pv.src = emb;
+  document.title = g.title + " | Clovis Cilumba";
+}
+document.getElementById("closeBtn").addEventListener("click", () => {
+  opened = null;
+  document.getElementById("galleryView").hidden = true;
+  document.getElementById("loginView").hidden = false;
+  document.getElementById("gPreview").src = "about:blank";
+  document.getElementById("code").value = "";
+  document.getElementById("msg").textContent = "";
+  history.replaceState(null, "", location.pathname);
+  applyLang();
+});
+
+const msg = document.getElementById("msg");
+async function tryCode(code) {
+  msg.className = "msg";
+  if (!norm(code)) { msg.textContent = t("empty"); msg.classList.add("err"); return; }
+  if (!window.crypto || !crypto.subtle) { msg.textContent = t("noCrypto"); msg.classList.add("err"); return; }
+  const btn = document.getElementById("openBtn");
+  btn.disabled = true; msg.textContent = t("checking");
+  const g = await unlock(code);
+  btn.disabled = false;
+  if (!g) { msg.textContent = t("wrong"); msg.classList.add("err"); return; }
+  msg.textContent = "";
+  showGallery(g);
+}
+document.getElementById("loginForm").addEventListener("submit", e => { e.preventDefault(); tryCode(document.getElementById("code").value); });
+
+document.getElementById("year").textContent = new Date().getFullYear();
+applyLang();
+
+/* Direct link: client.html#code=XXXX-XXXX-XXXX (the part after # never leaves the browser) */
+const hashCode = new URLSearchParams(location.hash.slice(1)).get("code");
+if (hashCode) { document.getElementById("code").value = hashCode; tryCode(hashCode); }
+</script>
+</body>
+</html>
