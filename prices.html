@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mufuki | Photo, Livestream, Podcast</title>
+  <meta name="description" content="Photography, livestreaming and podcast recording in Ottawa. See my work and book a session.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-page="prices">
+<!-- The menu at the top and the footer are added by assets/site.js (same on every page). -->
+<main id="top">
+  <section class="page-head">
+    <div class="wrap">
+      <h1 data-i18n="est.title">Price estimate</h1>
+      <p class="lede" data-i18n="est.lede">Pick a service and options to see a starting price. The final quote depends on your event.</p>
+    </div>
+  </section>
+  <section id="prices">
+    <div class="wrap">
+      <div class="est">
+        <div>
+          <fieldset>
+            <legend data-i18n="est.service">Service</legend>
+            <div class="chips" id="estServices"></div>
+          </fieldset>
+          <fieldset>
+            <legend><label for="estHours" data-i18n="est.hours">Hours</label></legend>
+            <div class="hours">
+              <input class="slider" type="range" id="estHours" min="1" max="8" step="1" value="2">
+              <output id="estHoursOut" for="estHours">2 h</output>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend data-i18n="est.extras">Extras</legend>
+            <div class="extras" id="estExtras"></div>
+          </fieldset>
+        </div>
+        <div class="total-card" aria-live="polite">
+          <p class="label" data-i18n="est.total">Estimated starting price</p>
+          <p class="amount" id="estTotal">$0</p>
+          <p class="note" data-i18n="est.note">Taxes not included. I'll confirm the exact price when I reply.</p>
+          <a class="btn btn-solid" href="book.html" id="estBook" data-i18n="est.cta">Book with this estimate</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="assets/config.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>

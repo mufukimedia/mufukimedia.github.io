@@ -1,22 +1,33 @@
 # mufuki.ca — how to update your website
 
-Your site has three pages:
+Your site has these pages, all sharing the same menu and footer:
 
-| File | What it is |
+| File | Page |
 |---|---|
-| `index.html` | The main website |
-| `client.html` | The private client gallery (mufuki.ca/client.html) |
-| `tools/gallery-maker.html` | Your tool for creating client galleries (mufuki.ca/tools/gallery-maker.html) |
+| `index.html` | Home |
+| `portfolio.html` | Work → Portfolio |
+| `before-after.html` | Work → Before & after |
+| `videos.html` | Work → Videos & podcasts |
+| `services.html` | Services (photo shoots, livestreaming, podcast recording) |
+| `prices.html` | Prices (only shown in the menu once `showPrices` is `true`) |
+| `book.html` | Book a session |
+| `client.html` | Client login / private galleries |
+| `tools/gallery-maker.html` | Your tool for creating client galleries |
 
-Almost everything you'll change lives in **one block** near the bottom of `index.html` called `const CONFIG = {`. To edit on GitHub: open the file, click the **pencil icon**, make the change, then click **Commit changes**. The live site updates within a minute or two.
+Shared files:
+- **`assets/config.js`**: your settings (prices, portfolio photos, before/after, videos, Instagram posts, calendar). **Almost everything you'll change is here.**
+- `assets/site.js`: the menu, translations (English/French) and how everything works.
+- `assets/site.css`: colours and layout.
+
+To edit on GitHub: open the file, click the **pencil icon**, make the change, then click **Commit changes**. The live site updates within a minute or two.
 
 ---
 
 ## 1. Your prices
 
-Prices are hidden until you turn them on: in `CONFIG`, change `showPrices: false` to `showPrices: true`.
+Prices are hidden until you turn them on: in `assets/config.js`, change `showPrices: false` to `showPrices: true`.
 
-In `CONFIG`, find `prices:`. Each service has:
+In `assets/config.js`, find `prices:`. Each service has:
 - `hourly`: your price per hour
 - `minHours` / `maxHours`: the range on the hours slider
 - `extras`: optional add-ons, each with an English name (`en`), a French name (`fr`) and a `price`
@@ -27,14 +38,14 @@ The "From $…/h" labels under each service and the price estimator both use the
 
 1. Export photos at about **2000px on the long side, JPG, under 500 KB**.
 2. On GitHub, open the `images` folder, then **Add file → Upload files**.
-3. In `CONFIG → photos`, fill in each line:
+3. In `assets/config.js → photos`, fill in each line:
    `{ src: "images/concert-01.jpg", category: "concerts", alt: "Singer on stage at a concert in Ottawa" },`
 
 Categories: `concerts`, `events`, `portraits`, `livestreams`.
 
 ## 3. Before and after
 
-Pick a photo you edited heavily. Export **both versions at exactly the same size**, upload them to `images`, then in `CONFIG → beforeAfter`:
+Pick a photo you edited heavily. Export **both versions at exactly the same size**, upload them to `images`, then in `assets/config.js → beforeAfter`:
 
 `{ before: "images/show-raw.jpg", after: "images/show-edit.jpg", alt: "Concert photo before and after editing" },`
 
@@ -50,13 +61,13 @@ The stage spotlight still follows the mouse on top of it.
 
 ## 5. Video and podcast samples
 
-Upload your clips to YouTube (Public or Unlisted), then paste the links in `CONFIG → reels`:
+Upload your clips to YouTube (Public or Unlisted), then paste the links in `assets/config.js → reels`:
 
 `{ youtube: "https://youtu.be/abc123XYZ00", en: "Sunday service livestream", fr: "Diffusion du culte du dimanche" },`
 
 ## 6. Instagram posts
 
-Open a post on Instagram, tap **⋯ → Copy link**, and paste it in `CONFIG → instagramPosts`:
+Open a post on Instagram, tap **⋯ → Copy link**, and paste it in `assets/config.js → instagramPosts`:
 
 `instagramPosts: ["https://www.instagram.com/p/ABC123/", "https://www.instagram.com/p/DEF456/"],`
 
@@ -75,15 +86,15 @@ Clients then pick a time right on your site, and it lands in your calendar autom
 
 1. Sign up at **formspree.io** with bookings@mufuki.ca and create a form.
 2. Copy its link (like `https://formspree.io/f/abcdwxyz`).
-3. In `index.html`, replace `https://formspree.io/f/YOUR_FORM_ID` with it.
+3. Already done: the form on `book.html` sends to your Formspree form.
 
 ## 9. Testimonials
 
-In the "What clients say" section of `index.html`, replace each placeholder with a real quote (with the client's permission) and remove `class="is-placeholder"` from that `<blockquote>`. Also remove the `data-i18n="rev.ph"` and `data-i18n="rev.who"` parts from that quote, otherwise the language switch replaces it with placeholder text.
+In the "What clients say" section of `index.html` (the home page), replace each placeholder with a real quote (with the client's permission) and remove `class="is-placeholder"` from that `<blockquote>`. Also remove the `data-i18n="rev.ph"` and `data-i18n="rev.who"` parts from that quote, otherwise the language switch replaces it with placeholder text.
 
 ## 10. English / French
 
-All the site's text is in `I18N` (just below `CONFIG`), with an `en` and `fr` version of every line. Change both when you edit wording.
+All the site's text is in `I18N` at the top of `assets/site.js`, with an `en` and `fr` version of every line. Change both when you edit wording.
 
 ---
 
